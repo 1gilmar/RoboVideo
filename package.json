@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jiraspiom/roboVideo.git"
+    "url": "git+https://github.com/1gilmar/RoboVideo.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jiraspiom/roboVideo/issues"
+    "url": "https://github.com/1gilmar/RoboVideo/issues"
   },
-  "homepage": "https://github.com/jiraspiom/roboVideo#readme"
+  "homepage": "https://github.com/1gilmar/RoboVideo#readme"
 }
