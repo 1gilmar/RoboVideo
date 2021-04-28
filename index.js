@@ -1,10 +1,16 @@
 const readLine = require('readline-sync')
+const robots = {
+  // userInput: require('./robots/user-input.js'),
+  texto: require('./robots/text.js')
+};
 
-function start(){
+async function start(){
   const content = {}
 
   content.searchTerm = askAndReturnSearchTerm()
   content.prefix = askAndReturnPrefix()
+
+  await robots.texto(content)
 
   function askAndReturnSearchTerm(){
     return readLine.question('Digite termo de busca: ')
