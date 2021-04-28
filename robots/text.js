@@ -1,8 +1,8 @@
 const algoritimia = require('algorithmia')
-const algoritimoApiKey = require('../credentials.json').apiKey
+const algoritimoApiKey = require('../credenciais/credentials.json').apiKey
 const sentencaboundaydetection = require('sbd')
 
-const watsonApiKey = require('../credencialswatson.json').apikey
+const watsonApiKey = require('../credenciais/credencialswatson.json').apikey
 const NaturalLanguage = require('watson-developer-cloud/natural-language-understanding/v1')
 
 var nlu = new NaturalLanguage({
