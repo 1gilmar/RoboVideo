@@ -4,7 +4,7 @@ const robots = {
   texto: require('./robots/text.js')
 };
 
-async function start(){
+async function start() {
   const content = {}
 
   content.searchTerm = askAndReturnSearchTerm()
@@ -12,11 +12,11 @@ async function start(){
 
   await robots.texto(content)
 
-  function askAndReturnSearchTerm(){
+  function askAndReturnSearchTerm() {
     return readLine.question('Digite termo de busca: ')
   }
 
-  function askAndReturnPrefix(){
+  function askAndReturnPrefix() {
     const prefixes = ['Who is', 'What is', 'The history of']
     const selectedPrefixIndex = readLine.keyInSelect(prefixes, 'Selecion uma opção: ')
     const selectedPrefixText = prefixes[selectedPrefixIndex];
