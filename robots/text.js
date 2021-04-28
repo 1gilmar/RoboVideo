@@ -7,18 +7,16 @@ const sentencaboundaydetection = require('sbd')
 
 async function robot(contexto) {
 	// console.log(`Recebi com sucesso o contexto ${contexto.searchTerm}`);
-	await fetchContentFromWikipedia(contexto)
+	await pegaContentFromWikipedia(contexto)
 	await sanitizeContent(contexto)
-	await breakContentIntoSentences(contexto)
+	await quebraContentEmSentences(contexto)
 
-	async function fetchContentFromWikipedia(contexto) {
-		//* retorn funcao asincrona
-		// return 'TESTANDO RETORNO DA FUNCAO ASYNC'
-		var input = {
-			"articleName": "AI Winter",
-			"lang": "en"
-		};
+	// var input = {
+	// 	"articleName": "AI Winter",
+	// 	"lang": "en"
+	// };
 
+	async function pegaContentFromWikipedia(contexto) {
 		const algoAutenticacao = algoritimia(algoritimoApiKey)
 		const wikepediaAlgo = algoAutenticacao.algo('web/WikipediaParser/0.1.2')
 		const wikepediaResponde = await wikepediaAlgo.pipe(contexto.searchTerm)
@@ -28,9 +26,9 @@ async function robot(contexto) {
 	}
 
 	function sanitizeContent(contexto) {
-		const semLinhaBrancaEMarkDown= removerLinhaBrancaEMarkDown(contexto.sourceContentOriginal)
+		const semLinhaBrancaEMarkDown = removerLinhaBrancaEMarkDown(contexto.sourceContentOriginal)
 		const semDataComParenteses = removeDataComParenteses(semLinhaBrancaEMarkDown)
-		
+
 		contexto.sourceContentSanitized = semDataComParenteses
 
 		function removerLinhaBrancaEMarkDown(texto) {
@@ -47,15 +45,15 @@ async function robot(contexto) {
 		}
 	}
 
-	function removeDataComParenteses(texto){
-		return texto.replace(/\((?:\([^()]*\)|[^()])*\)/gm, '').replace(/  /g,' ')
+	function removeDataComParenteses(texto) {
+		return texto.replace(/\((?:\([^()]*\)|[^()])*\)/gm, '').replace(/  /g, ' ')
 	}
 
-	function breakContentIntoSentences(contexto){
+	function quebraContentEmSentences(contexto) {
 		contexto.sentences = []
 
 		const sentenca = sentencaboundaydetection.sentences(contexto.sourceContentSanitized)
-		sentenca.forEach((sentence)=>{
+		sentenca.forEach((sentence) => {
 			contexto.sentences.push({
 				text: sentence,
 				keyworkds: [],
