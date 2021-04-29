@@ -6,10 +6,11 @@ const robots = {
 
 async function start() {
 
-  await robots.input()
+  robots.input()
   await robots.texto()
- 
-  console.log()
+  // await robots.image()
+  // await robots.video()
+  // await robots.youtube()
 
 }
 
