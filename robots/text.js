@@ -5,7 +5,9 @@ const sentencaboundaydetection = require('sbd')
 const watsonApiKey = require('../credenciais/credencialswatson.json').apikey
 const NaturalLanguage = require('watson-developer-cloud/natural-language-understanding/v1')
 
-var nlu = new NaturalLanguage({
+const state = require('./state.js')
+
+const nlu = new NaturalLanguage({
 	iam_apikey: watsonApiKey,
 	version: '2018-04-05',
 	url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
@@ -16,23 +18,28 @@ var nlu = new NaturalLanguage({
 // https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=Michael+Jackson
 
 
+// console.log(`Recebi com sucesso o contexto ${contexto.searchTerm}`);
 async function robot(contexto) {
-	// console.log(`Recebi com sucesso o contexto ${contexto.searchTerm}`);
+	console.log('> [text-robot] Starting...')
+  const content = state.load()
+	
 	await pegaContentFromWikipedia(contexto)
-	 await sanitizeContent(contexto)
-	 await quebraContentEmSentences(contexto)
-	 await limitMaximumSentences(contexto)
+	sanitizeContent(contexto)
+	quebraContentEmSentences(contexto)
+	limitMaximumSentences(contexto)
 	await fetchKeywordsOfAllSentences(contexto)
+
+	state.save(content)
 
 	// var input = {
 	// 	"articleName": "AI Winter",
 	// 	"lang": "en"
 	// };
 
-	async function pegaContentFromWikipedia(contexto) {
+	async function pegaContentFromWikipedia(content) {
 		const algoAutenticacao = algoritimia(algoritimoApiKey)
 		const wikepediaAlgo = algoAutenticacao.algo('web/WikipediaParser/0.1.2')
-		const wikepediaResponde = await wikepediaAlgo.pipe({ "articleName": contexto.searchTerm, "lang": contexto.lang })
+		const wikepediaResponde = await wikepediaAlgo.pipe({ "articleName": content.searchTerm, "lang": content.lang })
 		const wikepediaContent = wikepediaResponde.get()
 
 		contexto.sourceContentOriginal = wikepediaContent.content
