@@ -7,7 +7,7 @@ const robots = {
 async function start() {
 
   await robots.input()
-  // await robots.texto()
+  await robots.texto()
  
   console.log()
 

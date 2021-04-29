@@ -1,5 +1,5 @@
-const algoritimia = require('algorithmia')
-const algoritimoApiKey = require('../credenciais/credentials.json').apiKey
+const algorithmia = require('algorithmia')
+const algorithmiaApiKey = require('../credenciais/credentials.json').apiKey
 const sentencaboundaydetection = require('sbd')
 
 const watsonApiKey = require('../credenciais/credencialswatson.json').apikey
@@ -19,15 +19,15 @@ const nlu = new NaturalLanguage({
 
 
 // console.log(`Recebi com sucesso o contexto ${contexto.searchTerm}`);
-async function robot(contexto) {
+async function robot() {
 	console.log('> [text-robot] Starting...')
-  const content = state.load()
-	
-	await pegaContentFromWikipedia(contexto)
-	sanitizeContent(contexto)
-	quebraContentEmSentences(contexto)
-	limitMaximumSentences(contexto)
-	await fetchKeywordsOfAllSentences(contexto)
+	const content = state.load()
+
+	await fetchContentFromWikipedia(content)
+	sanitizeContent(content)
+	quebraContentEmSentences(content)
+	limitMaximumSentences(content)
+	await fetchKeywordsOfAllSentences(content)
 
 	state.save(content)
 
@@ -36,14 +36,16 @@ async function robot(contexto) {
 	// 	"lang": "en"
 	// };
 
-	async function pegaContentFromWikipedia(content) {
-		const algoAutenticacao = algoritimia(algoritimoApiKey)
-		const wikepediaAlgo = algoAutenticacao.algo('web/WikipediaParser/0.1.2')
-		const wikepediaResponde = await wikepediaAlgo.pipe({ "articleName": content.searchTerm, "lang": content.lang })
-		const wikepediaContent = wikepediaResponde.get()
-
-		contexto.sourceContentOriginal = wikepediaContent.content
-	}
+	async function fetchContentFromWikipedia(content) {
+		console.log('> [text-robot] Fetching content from Wikipedia')
+		const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey)
+		const wikipediaAlgorithm = algorithmiaAuthenticated.algo('web/WikipediaParser/0.1.2')
+		const wikipediaResponse = await wikipediaAlgorithm.pipe({ "articleName": content.searchTerm, "lang": content.lang })
+		const wikipediaContent = wikipediaResponse.get()
+	
+		content.sourceContentOriginal = wikipediaContent.content
+		console.log('> [text-robot] Fetching done!')
+	  }
 
 	function sanitizeContent(contexto) {
 		const semLinhaBrancaEMarkDown = removerLinhaBrancaEMarkDown(contexto.sourceContentOriginal)
@@ -84,11 +86,11 @@ async function robot(contexto) {
 
 }
 
-function limitMaximumSentences(contexto){
+function limitMaximumSentences(contexto) {
 	contexto.sentences = contexto.sentences.slice(0, contexto.maximumSentences)
 }
 
-async function fetchKeywordsOfAllSentences(contexto){
+async function fetchKeywordsOfAllSentences(contexto) {
 	console.log('> [text-robot] Starting to fetch keywords from Watson')
 
 	for (const sentence of contexto.sentences) {
