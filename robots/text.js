@@ -42,10 +42,10 @@ async function robot() {
 		const wikipediaAlgorithm = algorithmiaAuthenticated.algo('web/WikipediaParser/0.1.2')
 		const wikipediaResponse = await wikipediaAlgorithm.pipe({ "articleName": content.searchTerm, "lang": content.lang })
 		const wikipediaContent = wikipediaResponse.get()
-	
+
 		content.sourceContentOriginal = wikipediaContent.content
 		console.log('> [text-robot] Fetching done!')
-	  }
+	}
 
 	function sanitizeContent(contexto) {
 		const semLinhaBrancaEMarkDown = removerLinhaBrancaEMarkDown(contexto.sourceContentOriginal)
@@ -126,24 +126,4 @@ async function fetchWatsonAndReturnKeywords(sentence) {
 
 module.exports = robot
 
-
-// var nlu = new NaturalLanguage({
-// 	iam_apikey: watsonApiKey,
-// 	version: '2018-04-05',
-// 	url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
-// })
-
-// nlu.analyze({
-// 	text: `Hi iam michael jackson an i like doing the moowalker`,
-// 	features: {
-// 		keywords: {}
-// 	}
-// }, (erro, response) => {
-// 	if (erro) {
-// 		throw erro
-// 	}
-// 	console.log(JSON.stringify(response, null, 4))
-// 	//essa codigo abaixo e para finalizar o codigo por aqui.
-// 	process.exit(0)
-// })
 
