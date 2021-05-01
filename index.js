@@ -9,8 +9,8 @@ const robots = {
 
 async function start() {
 
-  // robots.comandos()
-  // await robots.texto()
+  robots.comandos()
+  await robots.texto()
   await robots.image()
   // await robots.video()
   // await robots.youtube()

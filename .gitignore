@@ -4,3 +4,5 @@ credencialswatson.json
 content.json
 google-search.json
 google.json
+
+content/*.png
