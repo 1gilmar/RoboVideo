@@ -14,24 +14,23 @@ function robot() {
 	state.save(content)
 
 	function askAndReturnSearchTerm() {
-		return readline.question('Type a Wikipedia search term: ')
+		return readline.question('Digite o termo de busca a ser buscado na Wikipedia: ')
 	}
 
 	function askAndReturnPrefix() {
 		const prefixes = ['Who is', 'What is', 'The history of']
-		const selectedPrefixIndex = readline.keyInSelect(prefixes, 'Choose one option: ')
+		const selectedPrefixIndex = readline.keyInSelect(prefixes, 'Selecione uma opção: ')
 		const selectedPrefixText = prefixes[selectedPrefixIndex]
 
 		return selectedPrefixText
 	}
 
 	function askLang() {
-		const lang = ['pt', 'en']
-		const lingua = readline.keyInSelect(lang, 'Choose one language: ')
+		const lang = ['pt', 'en', 'es']
+		const lingua = readline.keyInSelect(lang, 'Selecione o idioma: ')
 		const linguaSelecionada = lang[lingua]
 		return linguaSelecionada
 	}
-
 }
 
 module.exports = robot

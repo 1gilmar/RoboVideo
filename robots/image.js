@@ -26,7 +26,7 @@ async function robot() {
 				query = `${content.searchTerm} ${content.sentences[sentenceIndex].keywords[0]}`
 			}
 
-			console.log(`> [image-robot] Consulta Google images com: "${query}"`)
+			console.log(`> [image-robot] Consultando o google por imagens: "${query}"`)
 
 			content.sentences[sentenceIndex].images = await fetchGoogleAndReturnImagesLinks(query)
 			content.sentences[sentenceIndex].googleSearchQuery = query

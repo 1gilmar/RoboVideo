@@ -20,7 +20,7 @@ const nlu = new NaturalLanguage({
 
 // console.log(`Recebi com sucesso o contexto ${contexto.searchTerm}`);
 async function robot() {
-	console.log('> [text-robot] Starting...')
+	console.log('> [text-robot] Iniciado...')
 	const content = state.load()
 
 	await fetchContentFromWikipedia(content)
@@ -37,14 +37,14 @@ async function robot() {
 	// };
 
 	async function fetchContentFromWikipedia(content) {
-		console.log('> [text-robot] Fetching content from Wikipedia')
+		console.log('> [text-robot] Procurando contesto na Wikipedia')
 		const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey)
 		const wikipediaAlgorithm = algorithmiaAuthenticated.algo('web/WikipediaParser/0.1.2')
 		const wikipediaResponse = await wikipediaAlgorithm.pipe({ "articleName": content.searchTerm, "lang": content.lang })
 		const wikipediaContent = wikipediaResponse.get()
 
 		content.sourceContentOriginal = wikipediaContent.content
-		console.log('> [text-robot] Fetching done!')
+		console.log('> [text-robot]  Encontrado!')
 	}
 
 	function sanitizeContent(contexto) {
@@ -91,7 +91,7 @@ function limitMaximumSentences(contexto) {
 }
 
 async function fetchKeywordsOfAllSentences(contexto) {
-	console.log('> [text-robot] Starting to fetch keywords from Watson')
+	console.log('> [text-robot] Inigiando a procura de palavras chave usando Watson')
 
 	for (const sentence of contexto.sentences) {
 		console.log(`> [text-robot] Sentence: "${sentence.text}"`)
