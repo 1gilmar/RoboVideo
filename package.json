@@ -19,6 +19,7 @@
   "homepage": "https://github.com/1gilmar/RoboVideo#readme",
   "dependencies": {
     "algorithmia": "^0.3.10",
+    "gm": "^1.23.1",
     "googleapis": "^73.0.0",
     "image-downloader": "^4.0.2",
     "images-downloader": "^1.0.3",
